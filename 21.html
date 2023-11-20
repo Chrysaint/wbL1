@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="14.js"></script>
+    <script>
+      // создаем рекурсию для добавления в call Stack макс. кол-во функций.
+      function recursive() {
+        try {
+          recursive();
+        } catch (e) {
+          // в случае ошибки выводим длину стэка (11 Google Chrome; 128 Mozila; Safari - ???)
+          console.error(e.stack.split("\n").length);
+        }
+      }
+      recursive();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style></style>
+  </head>
+  <body>
+    <template id="template">
+      <div>
+        <h1 id="title"></h1>
+        <p id="text"></p>
+      </div>
+    </template>
+    <script>
+      // Достаем body для дальнейшего добавления в него созданных элементов
+      const body = document.querySelector("body");
+      // достаем шаблон для использования его структуры
+      const template = document.querySelector("#template");
+
+      // достаем тэг заголовка из шаблона и добавляем в него текст
+      const title = template.content.querySelector("#title");
+      title.textContent = "Заголовок";
+      // достаем тэг параграфа из шаблона и добавляем в него текст
+      const text = template.content.querySelector("#text");
+      text.textContent =
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique tempore magnam beatae possimus alias aut.";
+
+      // клонируем структуру нашего шаблона с измененным контентом
+      const div = template.content.cloneNode(true);
+
+      // добавляем его на структуру
+      body.appendChild(div);
+
+      title.textContent = "Заголовок 2";
+      text.textContent = "Текст 2";
+      const div2 = template.content.cloneNode(true);
+      body.appendChild(div2);
+    </script>
+  </body>
+</html>

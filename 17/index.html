@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+      }
+      div {
+        position: relative;
+      }
+      input {
+        width: 350px;
+        padding: 7px 15px;
+
+        border: none;
+        border-bottom: 1px solid #000;
+
+        font-size: 16px;
+      }
+
+      input:focus {
+        outline: none;
+        border-bottom: 2px solid rgb(148, 59, 148);
+      }
+
+      ul {
+        position: absolute;
+        list-style: none;
+        top: 40px;
+        left: 40px;
+      }
+
+      li {
+        border: 1px solid #000;
+        width: 250px;
+        padding: 15px 30px;
+        text-align: center;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      li:hover {
+        background-color: #ebebeb;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <input type="text" placeholder="Введите адрес" id="input" />
+      <ul id="list"></ul>
+    </div>
+  </body>
+  <script>
+    let items = [];
+    const input = document.querySelector("#input");
+    const list = document.getElementById("list");
+
+    const url = "https://api.apis.guru/v2/list.json?";
+
+    const API_KEY = "bc85159b-04c1-46d1-9a2c-a805657e8e7f";
+
+    async function fetchURL(query) {
+      try {
+        const resp = await fetch(
+          `https://graphhopper.com/api/1/geocode?${query}`,
+          { method: "GET" }
+        );
+        const data = await resp.json();
+        data.hits.map((hit) => {
+          let li = document.createElement("li");
+          li.textContent = hit.country + " " + hit.state + " " + hit.name;
+
+          list.appendChild(li);
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    function debouce(fn, ms) {
+      let timeoutId;
+
+      return function () {
+        clearTimeout(timeoutId);
+
+        timeoutId = setTimeout(() => {
+          fn.apply(this, arguments);
+        }, ms);
+      };
+    }
+
+    function throttle(func, delay) {
+      let lastCallTime = 0;
+      return function () {
+        const now = new Date().getTime();
+        if (now - lastCallTime >= delay) {
+          func.apply(this, arguments);
+          lastCallTime = now;
+        }
+      };
+    }
+
+    function handleInput(address) {
+      const listItems = document.querySelectorAll("li");
+      listItems.forEach((item) => item.remove());
+      const query = new URLSearchParams({
+        q: address,
+        locale: "en",
+        limit: "5",
+        key: API_KEY,
+      }).toString();
+      fetchURL(query);
+    }
+
+    const inputThrottler = throttle(handleInput, 1000);
+    // const inputHandlerDebounce = debouce(handleInput, 500);
+
+    input.addEventListener(
+      "input",
+      debouce(function (e) {
+        inputThrottler(e.target.value);
+      }, 1000)
+    );
+  </script>
+</html>

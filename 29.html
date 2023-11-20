@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <div>
+        <label for="name">Ваше имя</label>
+        <input type="text" id="name" />
+      </div>
+      <div>
+        <label for="surname">Ваша фамилия</label>
+        <input type="text" id="surname" />
+      </div>
+      <button onclick="submitForm()" id="btn" type="button">Отправить</button>
+    </form>
+    <script>
+      // Пишем функцию обработки формы. Функцию вызываем в свойстве onclick у элемента в html
+      function submitForm() {
+        // Достаем значения из полей ввода
+        const name = document.getElementById("name").value;
+        const surname = document.getElementById("surname").value;
+
+        // Создаем переменную сообщения
+        const msgText = "Ваше имя : " + name + "\nВаша фамилия : " + surname;
+        // вызываем оповещение с текстом созданного сообщения
+        alert(msgText);
+      }
+    </script>
+  </body>
+</html>

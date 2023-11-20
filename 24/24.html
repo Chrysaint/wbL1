@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <template id="table-row-template">
+      <tr id="table-row">
+        <td id="table-name"></td>
+        <td id="table-surname"></td>
+        <td id="table-phone"></td>
+        <td id="table-address"></td>
+        <td id="table-city"></td>
+        <td id="table-state"></td>
+        <td id="table-zip"></td>
+      </tr>
+    </template>
+    <table id="table">
+      <thead>
+        <tr>
+          <th data-type="string" data-sort="increase">Имя</th>
+          <th data-type="string" data-sort="increase">Фамилия</th>
+          <th data-type="number" data-sort="increase">Телефон</th>
+          <th data-type="string" data-sort="increase">Адрес</th>
+          <th data-type="string" data-sort="increase">Город</th>
+          <th data-type="string" data-sort="increase">Штат</th>
+          <th data-type="number" data-sort="increase">Индекс</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+    <div class="pagination" id="pagination">
+      <ul id="pagination-list" class="pagination-list"></ul>
+    </div>
+    <script type="module" src="24.js"></script>
+  </body>
+</html>

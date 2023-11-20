@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+      }
+
+      div {
+        width: 100px;
+        height: 100px;
+        background-color: limegreen;
+        transition: all 1000ms ease-in-out;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="animatedItem">1</div>
+    <script>
+      // Пишем функцию где достаем анимируемый элемент, через метод style задаем нужные стили.
+      function animateDiv() {
+        const div = document.getElementById("animatedItem");
+        div.style.width = "300px";
+        div.style.height = "300px";
+      }
+
+      //   Вызываем анимацию при загрузке страницы
+      window.onload = function () {
+        animateDiv();
+      };
+    </script>
+  </body>
+</html>

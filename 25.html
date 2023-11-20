@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+      }
+      .block {
+        width: 100px;
+        aspect-ratio: 1;
+        background-color: limegreen;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      // Достает body
+      const body = document.querySelector("body");
+      //   создаем функцию добавления элемента в DOM
+      function addItem() {
+        // Создаем элемент
+        const div = document.createElement("div");
+        // Даем элементу класс CSS
+        div.classList.add("block");
+        // Добавляем элемент в DOM
+        body.appendChild(div);
+      }
+      //   Вызываем функцию
+      addItem();
+      addItem();
+    </script>
+  </body>
+</html>

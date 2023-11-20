@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+      }
+
+      .password {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div class="password-input">
+        <input type="text" id="input" />
+        <p id="pass-score"></p>
+      </div>
+      <p class="suggested-pass"></p>
+    </div>
+    <script>
+      // Достаем инпут и параграфы с оценкой и предложенным паролем
+      const input = document.getElementById("input");
+      const passScoreText = document.getElementById("pass-score");
+      const suggested = document.querySelector(".suggested-pass");
+
+      const minPassLength = 8;
+
+      //   создаем regex для проверки на наличие тех или иных символов.
+      const digitRegex = /[0-9]/;
+      const letterRegex = /[a-z]/;
+      const capitalLetterRegex = /[A-Z]/;
+      const specialCharsRegex = /[-!$%^&*()_+|~=`{}\[\]:\/;<>?,.@#]/;
+
+      //   Функция проверяет есть ли те или иные символы в пароле и увеличивает оценку сложности в зависимости от этих условий.
+      function isGoodPass(inputValue) {
+        let passScore = 0;
+
+        if (inputValue.length <= 12 && inputValue.length > 8) {
+          passScore += 2;
+        }
+        if (inputValue.length >= 13) {
+          passScore += 3;
+        }
+        if (digitRegex.test(inputValue)) {
+          console.log(digitRegex.test(inputValue));
+          passScore += 2;
+        }
+
+        if (specialCharsRegex.test(inputValue)) {
+          passScore += 2;
+        }
+
+        if (letterRegex.test(inputValue)) {
+          passScore++;
+        }
+
+        if (capitalLetterRegex.test(inputValue)) {
+          passScore++;
+        }
+        return passScore;
+      }
+
+      //   Добавляем обработчик ввода в input
+      input.addEventListener("input", (e) => {
+        // Обновляем статусы оценки и предложенного пароля
+        suggested.textContent = "";
+        passScoreText.textContent = "";
+
+        // Получаем оценку пароля вызовом вышенаписанной функции
+        const passScore = isGoodPass(e.target.value);
+
+        // если длина пароля меньше допустимой, ничего не делаем и завершаем код.
+        if (e.target.value.length < minPassLength) return;
+
+        // Проверки на оценки, выводим разный текст в зависимости от оценки пароля
+        if (passScore < 5) {
+          passScoreText.style.color = "red";
+          passScoreText.textContent = "Слабый пароль";
+        }
+        if (passScore >= 5 && passScore < 7) {
+          passScoreText.style.color = "orange";
+          passScoreText.textContent = "Средний пароль";
+        }
+        if (passScore >= 7) {
+          passScoreText.style.color = "green";
+          passScoreText.textContent = "Надежный пароль";
+        }
+
+        // Если пароль не является надежным, выводим пользователю сгенерированный пароль
+        if (passScore <= 7) {
+          suggested.textContent =
+            "Предложенный пароль: " + generatePassword(14);
+        }
+      });
+
+      //   функция генерации пароля принимающая длину пароля
+      function generatePassword(length) {
+        const charset =
+          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-!$%^&*()_+|~=`{}[]:;/<>?,.@#";
+        let password = "";
+        // циклом перебираем случайные символы и добавляем их в пароль.
+        for (let i = 0; i < length; i++) {
+          const randomIndex = Math.floor(Math.random() * charset.length);
+          password += charset[randomIndex];
+        }
+
+        // если пароль получился надежным, возвращаем его для вывода пользователю, иначе запускаем функцию еще раз, делаем рекурсию
+        if (isGoodPass(password) >= 7) {
+          return password;
+        } else {
+          generatePassword(length);
+        }
+      }
+    </script>
+  </body>
+</html>

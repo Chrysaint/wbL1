@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+      <div></div>
+    </div>
+    <section>
+      <div><a href=""></a><a href=""></a><a href=""></a><a href=""></a></div>
+      <span></span>
+    </section>
+    <p></p>
+    <script>
+      const body = document.querySelector("body");
+      // Создаем функцию обхода дерева, которая принимает элемент начала обхода
+      function goThroughDOM(elem) {
+        console.log(elem);
+
+        // Достаем все вложенные в него элементы для дальнейшего обхода
+        const children = elem.children;
+
+        // Проходим по каждому дочернему элементу через рекурсию этой же функции, если у него дочерних элементов не будет, то сработает только console.log
+        // и мы вернемся в прошлый цикл.
+        for (let i = 0; i < children.length; i++) {
+          goThroughDOM(children[i]);
+        }
+      }
+
+      goThroughDOM(body);
+    </script>
+  </body>
+</html>
