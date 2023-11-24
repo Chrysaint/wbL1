@@ -1,0 +1,35 @@
+<!-- Не доразобрался с методами blob() и buffer(). -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>hello</h1>
+    <script>
+      const body = document.querySelector("body");
+
+      // Делаем функцию принимающую ссылку на картинку и выводящюю ее ширину и высоту.
+      function fetchImg(url) {
+        // Создаем новый объект картинки и добавляем ее на страницу.
+        const img = new Image();
+        body.appendChild(img);
+        // Даем картинке ссылку на контент и при загрузке выводим ширину и высоту.
+        img.src = url;
+        img.onload = function () {
+          console.log(this.width);
+          console.log(this.height);
+        };
+      }
+
+      const url =
+        "https://w.forfun.com/fetch/1a/1ad32de01c3b5950abdab32cf250a1cd.jpeg";
+
+      fetchImg(url);
+    </script>
+  </body>
+</html>
